@@ -27,12 +27,34 @@ body {
   height: 80px;
   background-color: rgba(244, 241, 234, 0.85);
   backdrop-filter: blur(10px);
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* IMPORTANT CHANGE */
+
   padding: 0 80px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 10;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.logo img {
+  display: block;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 55px;
+  position: relative;
 }
 
 .logo img {
@@ -162,6 +184,8 @@ body {
   max-width: 700px;
   color: var(--charcoal);
   transform: translateX(-120px);
+
+  text-align: left;   /* ADD THIS */
 }
 
 /* LIVE PILL */
@@ -219,8 +243,19 @@ body {
 /* FEATURES */
 .hero-features {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 25px;
+  flex-wrap: nowrap;      /* FORCE single line */
+  overflow-x: auto;       /* allows scroll if screen is too small */
+  -webkit-overflow-scrolling: touch;
+}
+
+.hero-features::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-features {
+  scrollbar-width: none;
 }
 
 .feature {
@@ -232,8 +267,10 @@ body {
 }
 
 .feature img {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* ========================= */
@@ -252,12 +289,15 @@ body {
 
 .btn-outline {
   padding: 12px 20px;
-  border: 1px solid var(--navy);
+  border: 1px solid var(--charcoal);
   background: transparent;
   border-radius: 999px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
+
+  color: var(--charcoal);
+  text-decoration: none;
 }
 
 .btn-filled {
@@ -513,6 +553,10 @@ body {
     display: inline-flex;
   }
 
+  .hero-features {
+  gap: 14px;
+  }
+
   .hero {
     height: 100dvh;
   }
@@ -526,8 +570,12 @@ body {
   }
 
   .feature {
-    font-size: 13px;
-  }
+  display: flex;
+  align-items: left;
+  gap: 8px;
+  font-size: 20px;
+  white-space: nowrap;
+}
 
   .section {
     min-height: auto;
@@ -542,7 +590,7 @@ body {
     transform: none;
     width: 100%;
     padding: 0 24px;
-    text-align: center;
+    text-align: left;
   }
 
   .hero-pill {
@@ -552,7 +600,7 @@ body {
 
   .hero-features {
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   .hero-buttons {
@@ -845,11 +893,28 @@ body {
 /* ========================= */
 
 .navbar {
+  height: 80px;
+  background-color: rgba(244, 241, 234, 0.85);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* IMPORTANT CHANGE */
+
+  padding: 0 15px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 10;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
 
 /* prevent content hiding under navbar */
 body {
@@ -1071,4 +1136,178 @@ body.scrolled .navbar {
   font-size: 14px;
   opacity: 0.75;
   margin-top: 10px;
+}
+
+/* ========================= */
+/* MOBILE SWIPE UPGRADE */
+/* ========================= */
+
+@media (max-width: 1050px) {
+
+  /* ========================= */
+  /* SERVICES → HORIZONTAL SCROLL */
+  /* ========================= */
+
+  .services-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 10px;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .service-card {
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+  }
+
+  /* hide scrollbar (clean look) */
+  .services-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .services-grid {
+    scrollbar-width: none;
+  }
+
+  /* ========================= */
+  /* PRICING → HORIZONTAL SCROLL */
+  /* ========================= */
+
+  .pricing-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 10px;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pricing-card {
+    flex: 0 0 75%;
+    scroll-snap-align: center;
+  }
+
+  .pricing-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pricing-grid {
+    scrollbar-width: none;
+  }
+
+  /* prevent ugly stretching */
+  .pricing-card.featured {
+    transform: none;
+  }
+
+  /* ========================= */
+  /* OPTIONAL: slight visual hint */
+  /* ========================= */
+
+  .service-card,
+  .pricing-card {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  }
+}
+
+/* ========================= */
+/* PROCESS: SWIPE + DOTS UI */
+/* ========================= */
+
+.process-wrapper {
+  position: relative;
+}
+
+/* STEP NUMBER BADGE */
+.step-number {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+
+  background: var(--navy);
+  color: var(--cream);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ensure positioning works */
+.process-card {
+  position: relative;
+}
+
+/* DOTS (hidden on desktop) */
+.process-dots {
+  display: none;
+}
+
+/* MOBILE ONLY */
+@media (max-width: 1050px) {
+
+  .process-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  background: rgba(7, 29, 73, 0.08); /* always visible */
+  color: rgba(7, 29, 73, 0.35);       /* dull but readable */
+
+  transition: 0.25s ease;
+  cursor: pointer;
+
+  border: 1px solid rgba(7, 29, 73, 0.08);
+  }
+
+  .dot.active {
+  background: var(--navy);
+  color: var(--cream);
+  transform: scale(1.1);
+  box-shadow: 0 8px 18px rgba(7, 29, 73, 0.25);
+  border: 1px solid rgba(7, 29, 73, 0.25);
+  }
+
+  /* swipe behavior */
+  .process-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .process-card {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+  }
+
+  .process-grid::-webkit-scrollbar {
+    display: none;
+  }
 }
