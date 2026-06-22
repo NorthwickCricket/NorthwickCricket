@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 /* RESET */
 * {
   margin: 0;
@@ -14,10 +16,13 @@
 }
 
 /* BODY */
+
 body {
-  font-family: "Inter", system-ui, -apple-system, Arial, sans-serif;
+  font-family: "Manrope", system-ui, -apple-system, Arial, sans-serif;
   overflow-x: hidden;
 }
+
+
 
 /* ========================= */
 /* NAVBAR */
@@ -179,6 +184,7 @@ body {
 /* ========================= */
 
 .hero-content {
+  font-family: "Plus Jakarta Sans", sans-serif;
   position: relative;
   z-index: 2;
   max-width: 700px;
