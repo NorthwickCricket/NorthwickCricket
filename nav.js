@@ -144,4 +144,34 @@ const observer = new IntersectionObserver(
   }
 );
 
-sections.forEach(sec => observer.observe(sec));
+sections.forEach(sec => observer.observe(sec));2
+
+/* ========================= */
+/* PROCESS DOT NAVIGATION */
+/* ========================= */
+
+const processGrid = document.querySelector(".process-grid");
+const dots = document.querySelectorAll(".process-dots .dot");
+
+if (processGrid && dots.length) {
+
+  processGrid.addEventListener("scroll", () => {
+    const index = Math.round(
+      processGrid.scrollLeft / processGrid.offsetWidth
+    );
+
+    dots.forEach(d => d.classList.remove("active"));
+    if (dots[index]) dots[index].classList.add("active");
+  });
+
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      const index = Number(dot.dataset.index);
+
+      processGrid.scrollTo({
+        left: index * processGrid.offsetWidth,
+        behavior: "smooth"
+      });
+    });
+  });
+}
